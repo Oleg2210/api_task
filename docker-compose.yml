@@ -12,6 +12,7 @@ services:
       - 8000
     volumes:
       - ./volumes/api/static:/usr/src/app/static
+      - ./volumes/api/logs:/usr/src/app/logs
 
   db:
     image: postgres:12.0-alpine

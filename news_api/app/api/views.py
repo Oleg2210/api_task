@@ -1,10 +1,13 @@
-from django.http import HttpResponse, Http404
+import logging
+from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import News
 from .serializers import NewsGetSerializer, NewsPostSerializer, NewsPutSerializer
 from .pagination import NewsCursorPagination
+
+logger = logging.getLogger('django')
 
 
 class NonExistentPathView(APIView):
@@ -29,6 +32,7 @@ class NewsApiView(APIView):
     paginator = NewsCursorPagination()
 
     def get(self, request, news_id=None):
+        0/0
         if news_id is None:
             instance = News.objects.all()
             page = self.paginator.paginate_queryset(instance, request, self)
@@ -64,7 +68,6 @@ class NewsApiView(APIView):
         instance = News.objects.get(id=news_id)
         instance.delete()
         return self.response_change_success(news_id, 'delete')
-
 
     @staticmethod
     def response_bad_request(serializer):

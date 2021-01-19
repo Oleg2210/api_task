@@ -130,3 +130,31 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 NEWS_AUTHOR_MAX_LENGTH = int(os.environ['NEWS_AUTHOR_MAX_LENGTH'])
 NEWS_TEXT_MAX_LENGTH = int(os.environ['NEWS_TEXT_MAX_LENGTH'])
 NEWS_PAGE_SIZE = int(os.environ['NEWS_PAGE_SIZE'])
+
+LOGGING = {
+    'version': 1,
+    'loggers': {
+        'django': {
+            'level': 'INFO',
+            'handlers': ['console', 'file']
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'common'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.environ['LOGGING_FILE'],
+            'formatter': 'common',
+        }
+    },
+    'formatters': {
+        'common': {
+            'format': '%(levelname)-8s %(asctime)-3s %(module)-12s %(message)s'
+        }
+    }
+}
