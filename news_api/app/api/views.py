@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import News
 from .serializers import NewsGetSerializer, NewsPostSerializer, NewsPutSerializer
+from .pagination import NewsCursorPagination
 
 
 class NonExistentPathView(APIView):
@@ -25,9 +26,14 @@ class NonExistentPathView(APIView):
 
 
 class NewsApiView(APIView):
+    paginator = NewsCursorPagination()
+
     def get(self, request, news_id=None):
         if news_id is None:
-            serializer = NewsGetSerializer(News.objects.all(), many=True)
+            instance = News.objects.all()
+            page = self.paginator.paginate_queryset(instance, request, self)
+            serializer = self.paginator.get_paginated_response(NewsGetSerializer(page, many=True).data)
+            return Response(serializer.data)
         else:
             self.check_news_exist(news_id)
             serializer = NewsGetSerializer(News.objects.get(id=news_id))
