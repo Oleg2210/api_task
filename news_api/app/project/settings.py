@@ -125,3 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+NEWS_AUTHOR_MAX_LENGTH = int(os.environ['NEWS_AUTHOR_MAX_LENGTH'])
+NEWS_TEXT_MAX_LENGTH = int(os.environ['NEWS_TEXT_MAX_LENGTH'])
+NEWS_PAGE_SIZE = int(os.environ['NEWS_PAGE_SIZE'])
