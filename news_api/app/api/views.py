@@ -32,7 +32,6 @@ class NewsApiView(APIView):
     paginator = NewsCursorPagination()
 
     def get(self, request, news_id=None):
-        0/0
         if news_id is None:
             instance = News.objects.all()
             page = self.paginator.paginate_queryset(instance, request, self)
